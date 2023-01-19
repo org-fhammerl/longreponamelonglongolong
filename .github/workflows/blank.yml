@@ -1,0 +1,43 @@
+name: Actions Checkout paths
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+jobs:
+  checkouts:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout org-fhammerl/longreponamelonglongolong to GITHUB_WORKSPACE
+      - run: pwd && ls -la
+      
+      - uses: actions/checkout@v3
+        with:
+          repository: actions/toolkit
+        name: Checkout actions/toolkit to GITHUB_WORKSPACE
+      - run: pwd && ls -la
+
+      - uses: actions/checkout@v3
+        with:
+          repository: actions/toolkit
+          path: toolkit_custom_path
+        name: Checkout fhammerl/repolength to GITHUB_WORKSPACE/toolkit_custom_path
+      - run: | 
+          pwd
+          ls -la
+          ls toolkit_custom_path
+      
+      - uses: actions/checkout@v3
+        with:
+          path: longreponamelonglongolong
+      - run: | 
+          pwd
+          ls -la
+          ls longreponamelonglongolong
+
+      - name: echo Github WORKSPACE - ends in longreponamelonglongolong/longreponamelonglongolong
+        run: echo $GITHUB_WORKSPACE
+      - name: echo Runner WORKSPACE - ends in longreponamelonglongolong
+        run: echo $RUNNER_WORKSPACE
